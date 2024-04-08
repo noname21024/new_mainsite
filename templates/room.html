@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %} 
+
+<style>
+    .read-button-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .read-button {
+        padding: 10px;
+        background-color: rgb(170, 14, 14);
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 10px;
+        border: none;
+
+    }
+
+    .tags-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .tags-container a {
+        padding: 5px 10px;
+        background-color: #CECECE;
+        border-radius: 10px;
+        transition: all 150ms ease-in-out;
+
+    }
+
+    .tags-container a:hover {
+        background-color: rgb(154, 245, 245);
+    }
+
+    .continue_read {
+        background-color: rgb(40, 69, 201);
+        color: white;
+    }
+
+    .continue_read i{
+        margin: 0 3px;
+        
+    }
+
+    .follow-button {
+        background-color: #2AAC2A;
+    }
+</style>
+<div class = "container">
+        <img src="{{manga.image}}" alt="" class = "thumnail">
+        <h3>{{manga.name}}</h3>
+
+        <div class="tags-container">
+            {% for tag in tags_manga %}
+                <a href="{% url 'list' tag.id %}">{{tag.name}}</a>
+            {% endfor %}
+        </div>
+        
+        <p class = "manga-description">{{manga.description}}</p>
+        <div class="read-button-container">
+            <a href="{% url 'manga-content' manga.name last_chapter.id %}" class ="read-button">
+                Đọc từ đầu
+            </a>
+            <a href="{% url 'manga-content' manga.name new_chapter.id %}" class = "read-button">
+                Đọc mới nhất
+            </a>
+            {% if continue_read != None %}
+            <a href="{% url 'manga-content' manga.name continue_read.id %}" class = "read-button continue_read">
+                Đọc tiếp <i class="fas fa-angle-right"></i>
+            </a>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <form action="" method = 'POST'>
+                {% csrf_token %}
+                <input type="hidden" name = 'value' value="follow-button">
+                {% if following %}
+                <button class="read-button unfollow-button" name = 'follow' value = 'unfollow' type = "submit">
+                    <i class="fas fa-times"></i>
+                </button>
+                {% else %}
+                <button class="read-button follow-button" name = 'follow' value = 'follow' type="submit">
+                    <i class="fas fa-bookmark"></i>
+                </button>
+                {% endif %}
+            </form>
+            {% endif %}
+        </div>
+        <div class = "list-chapter">
+            {% for chapter in chapters %}
+                <a href="{% url 'manga-content' manga.name chapter.id %}" style ="display: flex; justify-content: space-between;">
+                    <span>
+                        <i class = "far fa-file-alt"></i>
+                        {{chapter.chaptername}}
+                    </span>
+                    <span>
+                        {{chapter.views}}
+                        <i class="fas fa-glasses" style="margin-left: 3px; font-size: 15px; padding: 4px 7px; background-color: rgba(187, 187, 187, 0.479); border-radius: 5px;"></i>
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
