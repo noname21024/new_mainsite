@@ -33,7 +33,7 @@ def home(request):
     tags = Tags.objects.all()
 
 
-    data = get_json_file()
+    # data = get_json_file()
 
     # logic o day la luon bar 
 
