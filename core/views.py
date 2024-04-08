@@ -19,7 +19,7 @@ def get_json_file():
     list = []
     #  page 11 12 16 
     # đã load trang 20 từ trang 11 
-    for page in range(2,4):
+    for page in range(4,5):
         with open(f'get_mangas_page{page}.json', 'r', encoding='utf-8') as f:
             for data in json.load(f):
                 if data['name'] != None:
@@ -35,7 +35,7 @@ def home(request):
 
     # data = get_json_file()
 
-    # logic o day la luon bar 
+    # # logic o day la luon bar 
 
 
     # for item in data:
