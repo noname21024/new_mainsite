@@ -108,12 +108,25 @@
             </a>
             <h5 style="margin-top: 15px;
             display: flex;
-            justify-content: center;">
+            justify-content: start;
+            margin-bottom: 15px">
                 <a href="{% url 'room' manga.name %}">
                     {{manga.name|truncatechars:30}}
                 </a>
             </h5>
-
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                {% for chapter in manga.chapters.all|slice:':3' %}
+                <div>
+                    <a href="{% url 'manga-content' manga.name chapter.id %}">
+                        {% with chapter.chaptername|split:manga.name as chaps %}
+                        {% for chap in chaps|slice:'-1:' %}
+                            {{chap|truncatechars:'30'}}
+                        {% endfor %}
+                        {% endwith %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>                    
         </div>    
         {% endfor %}
     </div>
