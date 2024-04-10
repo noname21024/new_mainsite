@@ -35,17 +35,17 @@
                 <p>xem gần nhất</p>
                 <p>chapter mới</p>
             </div>
-            {% for manga in user.mangas.all %}
+            {% for manga in user.follows.all %}
             <div class="story-now-follow-items">
                 <div class = "manga-infomation-of-userpage">
                     <div class="manga-image-in-userpage">
-                        <a href="{% url 'manga-room' manga.title %}"><img src="{{manga.image.url}}" alt=""></a>
+                        <a href="{% url 'room' manga.manga.name %}"><img src="{{manga.manga.image}}" alt="" style = "border: 2px rgb(138, 138, 138) solid; border-radius: 10px;"></a>
                     </div>
                     <div class="items-name-and-unfollow">
-                    <a href="{% url 'manga-room' manga.title %}">{{manga.title}}</a>
+                    <a href =  "{% url 'room' manga.manga.name %}">{{manga.manga.name}}</a>
                     <form action="" method = 'POST'>
                         {% csrf_token %}
-                        <button class = 'unfollow-manga' name = 'name' value = {{manga.title}}><i class="fa-solid fa-xmark"></i> Unfollow</button>
+                        <button class = 'unfollow-manga' name = 'name' value = {{manga.name}}><i class="fa-solid fa-xmark"></i> Unfollow</button>
                     </form>
                 </div>
                 </div>
