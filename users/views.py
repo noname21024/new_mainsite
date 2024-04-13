@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from core.models import Tags
+from core.models import Following, Mangas, Tags
 
 
 def register(request):
@@ -30,8 +31,20 @@ def logoutPage(request):
     return redirect('home')
 
 def user_page(request):
+    
+    tags = Tags.objects.all()
 
-    return render(request, 'information.html')
+    if request.method == 'POST':
+        action = request.POST.get('unfollow')
+        if action:
+            name_of_manga = request.POST['name-manga']
+            manga = Mangas.objects.get(name = name_of_manga)
+            print(name_of_manga)
+            Following.objects.get(manga = manga, user = request.user).delete()  
+
+    context = {'tags': tags}
+
+    return render(request, 'information.html', context)
 
 
 def change_information(request):

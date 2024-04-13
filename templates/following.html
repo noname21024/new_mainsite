@@ -23,12 +23,24 @@
             </a>
             <h5 style="margin-top: 15px;
             display: flex;
-            justify-content: center;">
+            justify-content: start;">
                 <a href="{% url 'room' manga.manga.name %}">
                     {{manga.manga.name|truncatechars:30}}
                 </a>
             </h5>
-
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                {% for chapter in manga.manga.chapters.all|slice:':3' %}
+                <div>
+                    <a href="{% url 'manga-content' manga.manga.name chapter.id %}">
+                        {% with chapter.chaptername|split:manga.manga.name as chaps %}
+                        {% for chap in chaps|slice:'-1:' %}
+                            {{chap|truncatechars:'30'}}
+                        {% endfor %}
+                        {% endwith %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>                
         </div>    
         {% endfor %}
     </div>

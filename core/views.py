@@ -239,9 +239,11 @@ def following_page(request):
     following = request.user.follows.all()
     paginator = Paginator(following, 36)
     page = paginator.get_page(request.GET.get('page'))
+    tags = Tags.objects.all()
 
     context = {
-        'page': page
+        'page': page,
+        'tags': tags,
     }
 
     return render(request, 'following.html', context)

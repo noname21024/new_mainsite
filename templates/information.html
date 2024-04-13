@@ -24,10 +24,11 @@
             </div>
         </div>
     </div>
+    {% if request.user.follows.first %}
     <div class="story-follow">
         <div class="story-follow-header">
             <p>Truyện đang theo dõi</p>
-            <a href="">Xem tất cả <i class="fas fa-angle-right"></i></a>
+            <a href="{% url 'following-page' %}">Xem tất cả <i class="fas fa-angle-right"></i></a>
         </div>
         <div class="story-now-follow">
             <div class="story-now-follow-header">
@@ -45,7 +46,8 @@
                     <a href =  "{% url 'room' manga.manga.name %}">{{manga.manga.name}}</a>
                     <form action="" method = 'POST'>
                         {% csrf_token %}
-                        <button class = 'unfollow-manga' name = 'name' value = {{manga.name}}><i class="fa-solid fa-xmark"></i> Unfollow</button>
+                        <input type="hidden" name = "name-manga" value = "{{manga.manga.name}}">
+                        <button type = "submit" class = 'unfollow-manga' name = 'unfollow' value = {{manga.manga.name}}><i class="fa-solid fa-xmark"></i> Unfollow</button>
                     </form>
                 </div>
                 </div>
@@ -61,5 +63,12 @@
             {% endfor %}
         </div>
     </div>
+    {% else %}
+
+    <div style = "margin-bottom: 17rem;">
+
+    </div>
+
+    {% endif %}
 </div>
 {% endblock %}
