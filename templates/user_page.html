@@ -198,8 +198,6 @@
 
 }
 
-
-
 .manga-infomation-of-userpage .items-name-and-unfollow a:hover {
     color: rgb(156, 28, 156);
     text-decoration: underline;
@@ -256,6 +254,8 @@ font-size: 15px;
         display: flex;
         flex-direction: column;
     }
+
+
 }
 </style>
 
@@ -296,7 +296,10 @@ width: 100%;">
                         <a href="{% url 'change-infor' %}"><i class="far fa-address-card"></i>Thông tin tài khoản</a>
                     </div>
                     <div class="story-is-following">
-                        <a href="{% url 'following-page' %}"><i class="fas fa-bookmark"></i>Truyện đang theo dõi</a>
+                        <a href="{% url 'following-page-user' %}"><i class="fas fa-bookmark"></i>Truyện đang theo dõi</a>
+                    </div>
+                    <div class="story-is-following">
+                        <a href="{% url 'history-user-page' %}"><i class="fas fa-bookmark"></i>Lịch sử xem</a>
                     </div>
                     <div class="notification">
                         <a href=""><i class="fas fa-bell"></i>Thông báo</a>

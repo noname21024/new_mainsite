@@ -51,7 +51,7 @@
             <ul class="dropdown-menu dropdown-user">
               <li><a class="dropdown-item text-capitalize dropdown-li-item" href="{% url 'user-page' %}"><i class="fas fa-id-card"></i> Thông tin</a></li>
               <li><a class="dropdown-item text-capitalize dropdown-li-item" href="{% url 'following-page' %}"><i class="fas fa-bookmark"></i> Truyện đang theo dõi</a></li>
-              <li><a class="dropdown-item text-capitalize dropdown-li-item" href=""><i class="fas fa-glasses"></i> Lịch sử xem</a></li>
+              <li><a class="dropdown-item text-capitalize dropdown-li-item" href="{% url 'history_view' %}"><i class="fas fa-glasses"></i> Lịch sử xem</a></li>
               <li><a class="dropdown-item text-capitalize dropdown-li-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
             </ul>
           </li>

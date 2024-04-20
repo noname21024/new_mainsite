@@ -72,6 +72,9 @@ class HistoryWatch(models.Model):
     class Meta:
         ordering = ['-created', '-updated']
 
+    def __str__(self):
+        return f'{self.manga.name} - {self.chapter.chaptername}'
+
 class Following(models.Model):
     manga = models.ForeignKey(Mangas, on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'follows')

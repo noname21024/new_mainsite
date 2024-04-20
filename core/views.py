@@ -248,6 +248,19 @@ def following_page(request):
 
     return render(request, 'following.html', context)
 
+
+def following_page_user(request):
+    following = request.user.follows.all()
+    paginator = Paginator(following, 36)
+    page = paginator.get_page(request.GET.get('page'))
+    tags = Tags.objects.all()
+
+    context = {
+        'page': page,
+        'tags': tags,
+    }
+    return render(request, 'user_page_following.html', context)
+
 def search_manga(request):
     manga_text = request.POST.get('q') if request.POST.get('q') != None else ''
 
@@ -281,3 +294,23 @@ def manga_search_result(request):
     }
 
     return render(request, 'manga_result.html', context)
+
+def history_view(request):
+    history_all = request.user.histories.all()
+
+    paginator = Paginator(history_all, 36)
+    page = paginator.get_page(request.GET.get('page'))
+
+    context = {'page': page}
+
+    return render(request, 'history_view.html', context)
+
+def history_user_page(request):
+    history_all = request.user.histories.all()
+
+    paginator = Paginator(history_all, 36)
+    page = paginator.get_page(request.GET.get('page'))
+
+    context = {'page': page}
+
+    return render(request, 'history_user_page.html', context)

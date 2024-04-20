@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Images, Mangas, Chapters, Tags, Following
+from .models import Images, Mangas, Chapters, Tags, Following, HistoryWatch
 
 class ItemAdmin(admin.ModelAdmin):
     search_fields = ['name']
@@ -10,3 +10,4 @@ admin.site.register(Mangas, ItemAdmin)
 admin.site.register(Chapters)
 admin.site.register(Tags)
 admin.site.register(Following)
+admin.site.register(HistoryWatch)

@@ -2,6 +2,11 @@
 
 
 {% block content %}
+    <style>
+        .name_of_manga a:hover {
+            color: rgb(0, 95, 173);
+        }
+    </style>
 
     <div class = 'row'>
         {% if messages %}
@@ -14,7 +19,6 @@
         </div>
         {% endif %}
     </div>
-
     <div class="manga-container">
         <p class = "hot-manga-title">
             <i class='fas fa-fire-alt' style='font-size:24px'></i> Truyện đang hot
@@ -50,7 +54,7 @@
                 <a href="{% url 'room' manga.name %}">
                     <img src ="{{manga.image}}" alt="">
                 </a>
-                <h5 style="margin-top: 15px;
+                <h5 class = "name_of_manga" style="margin-top: 15px;
                 display: flex;
                 justify-content: start;
                 font-size: 1rem;">
@@ -98,6 +102,5 @@
             </nav>  
         </div>
     </div>
-
 
 {% endblock %}
