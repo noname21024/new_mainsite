@@ -218,6 +218,7 @@ def room(request, title):
     manga.all_views = all_views
     manga.save()
 
+
     context = {
         'manga': manga,
         'chapters': chapters,
@@ -228,6 +229,7 @@ def room(request, title):
         'tags': tags,
         'continue_read': continue_read,
         'following': following,
+        'description': manga.description
     }
     return render(request, 'room.html', context)
 

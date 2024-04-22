@@ -13,7 +13,11 @@
     <meta name="google-site-verification" content="qPuSkXmSLnFfsQeg2t2aIU9RIh2fvRiEYgqu9jkC1uE" />
     <link rel="icon" href="{% static 'images/Untitled.png' %}">
     <title>Otakusite</title>
+    {% if descrition %}
+    <meta name="description" content="{{description}}" />
+    {% else %}
     <meta name="description" content="Xem manga online xem trên điện thoại di động và máy tính nhanh nhất." />
+    {% endif %}
     <meta name="keywords" content="manga, otakusite, manga hay, xem manga, truyện tranh, truyện mới nhất, my otakusite, otakusite trang web" />
     <meta name="title" content="Otakusite" />
     <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
