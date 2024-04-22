@@ -25,13 +25,13 @@
         </p>
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-            {% for manga in manga_ratings|dictsort:'all_views'|slice:":10" %}
+            {% for manga_top in top_mangas|slice:":10" %}
             <div class="swiper-slide">
-                <a href="{% url 'room' manga.name %}">
-                    <img src="{{manga.image}}" alt="">
+                <a href="{% url 'room' manga_top.name %}">
+                    <img src="{{manga_top.image}}" alt="">
                 </a>
-                <a href="{% url 'manga-content'  manga.name manga.chapters.first.id %}" class = "position-absolute bottom-0 start-50 translate-middle-x btn btn-primary" role="button" style = "font-size: 14px; margin-bottom: 10px" >
-                    {% with manga.chapters.first.chaptername|split:manga.name as chaps %}
+                <a href="{% url 'manga-content'  manga_top.name manga_top.chapters.first.id %}" class = "position-absolute bottom-0 start-50 translate-middle-x btn btn-primary" role="button" style = "font-size: 14px; margin-bottom: 10px" >
+                    {% with manga_top.chapters.first.chaptername|split:manga_top.name as chaps %}
                     {% for chap in chaps|slice:'-1:' %}
                         {{chap|truncatechars:'15'}}
                     {% endfor %}

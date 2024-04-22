@@ -92,6 +92,9 @@
             </form>
             {% endif %}
         </div>
+        <div>
+            {{manga.all_views}}
+        </div>
         <div class = "list-chapter">
             {% for chapter in chapters %}
                 <a href="{% url 'manga-content' manga.name chapter.id %}" style ="display: flex; justify-content: space-between;">

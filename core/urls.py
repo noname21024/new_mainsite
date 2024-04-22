@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -12,7 +12,8 @@ urlpatterns = [
     path('tim_kiem/', views.manga_search_result, name = 'manga-search-result'),
     path('lich_su/', views.history_view, name = 'history_view'),
     path('following/', views.following_page_user, name = 'following-page-user'),
-    path('history_user_page/', views.history_user_page, name = 'history-user-page')
+    path('history_user_page/', views.history_user_page, name = 'history-user-page'),
+
 ]
 
 # 

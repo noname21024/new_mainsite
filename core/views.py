@@ -77,6 +77,8 @@ def home(request):
 
     mangas = Mangas.objects.all()
 
+    top_manga = mangas.order_by('-all_views')
+
     paginator = Paginator(mangas, 36)
     page = paginator.get_page(request.GET.get('page'))
 
@@ -85,7 +87,8 @@ def home(request):
         'mangas': mangas, 
         'tags': tags,
         'page': page,
-        'manga_ratings': mangas
+        'manga_ratings': mangas,
+        'top_mangas': top_manga,
     }
     return render(request, 'home.html', context)
 
