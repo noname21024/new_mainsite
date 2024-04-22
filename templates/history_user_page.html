@@ -46,11 +46,17 @@
             </div>
             </div>
             <div class =  "chapter-is-reading">
-                <a href = "">chapter 8</a>
+                <a href = "{% url 'manga-content' manga.manga.name manga.chapter.id %}">
+                    {% with manga.chapter.chaptername|split:manga.manga.name as chaps %}
+                    {% for chap in chaps|slice:'-1:' %}
+                        {{chap|truncatechars:'15'}}
+                    {% endfor %}
+                    {% endwith %}
+                </a>
                 <p>25/11/22</p>
             </div>
             <div class="latest-chapter">
-                <a href="">
+                <a href="{% url 'manga-content' manga.manga.name manga.manga.chapters.first.id %}">
                     {% with manga.manga.chapters.first.chaptername|split:manga.manga.name as chaps %}
                     {% for chap in chaps|slice:'-1:' %}
                         {{chap|truncatechars:'15'}}

@@ -34,7 +34,13 @@
             </div>
             </div>
             <div class =  "chapter-is-reading">
-                <a href = "">chapter 8</a>
+                <a href = "">
+                    {% with manga.manga.histories|split:manga.manga.name as chaps %}
+                    {% for chap in chaps|slice:'-1:' %}
+                        {{chap|truncatechars:'15'}}
+                    {% endfor %}
+                    {% endwith %}
+                </a>
                 <p>25/11/22</p>
             </div>
             <div class="latest-chapter">
