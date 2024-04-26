@@ -93,7 +93,8 @@
             {% endif %}
         </div>
         <div>
-            {{manga.all_views}}
+            <p style = "display: inline-block; font-weight: 500; font-size: 17px;">Tổng số lượt xem: </p>
+            {{manga.all_views}} <i class="fas fa-eye"></i>
         </div>
         <div class = "list-chapter">
             {% for chapter in chapters %}
