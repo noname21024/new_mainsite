@@ -11,8 +11,19 @@
     <link href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css?v=7857324">
     <meta name="google-site-verification" content="qPuSkXmSLnFfsQeg2t2aIU9RIh2fvRiEYgqu9jkC1uE" />
+    <meta property="og:title" content="Đọc Truyện Tranh Online - Website chính thức - NetTruyen" />
+    <meta property="og:site_name" content="NetTruyen" />
+    <meta property="og:url" content="https://www.nettruyenvv.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Web đọc truyện tranh online lớn nhất được cập nhật liên tục mỗi ngày - Cùng tham gia đọc truyện và thảo luận với hơn 💚10 triệu thành viên tại NetTruyen" />
+    <meta itemprop="name" content="Đọc Truyện Tranh Online - Website chính thức - NetTruyen" /><meta itemprop="description" content="Web đọc truyện tranh online lớn nhất được cập nhật liên tục mỗi ngày - Cùng tham gia đọc truyện và thảo luận với hơn 💚10 triệu thành viên tại NetTruyen" />
     <link rel="icon" href="{% static 'images/Untitled.png' %}">
+    {% if title %}
+    <title>{{title}}
+    </title> 
+    {% else %}
     <title>Otakusite</title>
+    {% endif %}
     {% if descrition %}
     <meta name="description" content="{{description}}" />
     {% else %}

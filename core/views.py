@@ -7,6 +7,7 @@ from .form import MangaForm
 from django.template.defaulttags import register
 from functools import reduce
 import operator
+from users.models import Messages
 
 @register.filter(name='split')
 def split(value, key): 
@@ -19,7 +20,7 @@ def get_json_file():
     list = []
     #  page 11 12 16 
     # đã load trang 20 từ trang 11 
-    for page in range(6,7):
+    for page in range(10,11):
         with open(f'get_mangas_page{page}.json', 'r', encoding='utf-8') as f:
             for data in json.load(f):
                 if data['name'] != None:
@@ -35,45 +36,46 @@ def home(request):
     # logic ở đay là tạo luôn cả chapter
 
 
-    # data = get_json_file()
+#     data = get_json_file()
 
-    # for item in data:
-    #     try:
-    #         for tag in item['tags']:
-    #             Tags.objects.get_or_create(name = tag)
-    #     except:
-    #         pass
+#     for item in data:
+#         try:
+#             for tag in item['tags']:
+#                 Tags.objects.get_or_create(name = tag)
+#         except:
+#             pass
         
-    #     if Mangas.objects.filter(name = item['name']):
-    #         current_manga = Mangas.objects.get(name = item['name'])
-    #         if current_manga.name == item['name']:
-    #             try:
-    #                 for tag in item['tags']:
-    #                     category = Tags.objects.get(name = tag)
-    #                     current_manga.tags.add(category)
-    #             except:
-    #                 pass
-    #             try:
-    #                 for chapter in item['chapter']:
-    #                     name, value = get_chapter(chapter)
-    #                     current_chapter = Chapters.objects.filter(manga = current_manga, chaptername = name)
-    #                     if current_chapter:
-    #                         name_of_chapter = get_images(current_chapter)
-    #                         get_chap = Chapters.objects.get(manga = current_manga, chaptername = name_of_chapter)
-    #                         try:
-    #                             for img in value:
-    #                                     image = Images.objects.get_or_create(manga = current_manga, chapters = get_chap, image = img)
-    #                                     if image[0].image == value[-1]:
-    #                                         break
-    #                         except:
-    #                             pass
-    #                     else:
-    #                         Chapters.objects.create(manga = current_manga, chaptername = name)
-    #             except:
-    #                 pass
-    #     else:
-    #         Mangas.objects.create(name = item['name'], description = item['description'], image = item['image'])
+#         if Mangas.objects.filter(name = item['name']):
+#             current_manga = Mangas.objects.get(name = item['name'])
+#             if current_manga.name == item['name']:
+#                 try:
+#                     for tag in item['tags']:
+#                         category = Tags.objects.get(name = tag)
+#                         current_manga.tags.add(category)
+#                 except:
+#                     pass
+#                 try:
+#                     for chapter in item['chapter']:
+#                         name, value = get_chapter(chapter)
+#                         current_chapter = Chapters.objects.filter(manga = current_manga, chaptername = name)
+#                         if current_chapter:
+#                             name_of_chapter = get_images(current_chapter)
+#                             get_chap = Chapters.objects.get(manga = current_manga, chaptername = name_of_chapter)
+#                             try:
+#                                 for img in value:
+#                                         image = Images.objects.get_or_create(manga = current_manga, chapters = get_chap, image = img)
+#                                         if image[0].image == value[-1]:
+#                                             break
+#                             except:
+#                                 pass
+#                         else:
+#                             Chapters.objects.create(manga = current_manga, chaptername = name)
+#                 except:
+#                     pass
+#         else:
+#             Mangas.objects.create(name = item['name'], description = "Chưa có descriptions cho bộ truyện này", image = item['image'])
 
+# #  item['description']
 
     mangas = Mangas.objects.all()
 
@@ -106,9 +108,9 @@ def list_manga(request, pk):
     #     mangas = Mangas.objects.filter(reduce(operator.and_, [Q(tags__name=c) for c in list]))
 
     # action = Tags.objects.get(name = 'Action')
-    # fantasy = Tags.objects.get(name = 'Fantasy')
+    # fantasy = Tags.objects.get(name = 'Drama')
     
-    # mangas = Mangas.objects.all().filter_all_many_to_many('tags', action, fantasy) # red and blue being color instances
+    # mangas = Mangas.objects.all().filter_all_many_to_many('tags', action, fantasy)
 
     if pk != 'None':
         mangas = Mangas.objects.filter(Q(tags__pk = int(pk)))
@@ -177,7 +179,8 @@ def manga_content(request, name, pk):
         'chap': 'chap',
         'tags': Tags.objects.all(),
         'current_chapter': chapter,
-        'following': following
+        'following': following,
+        'title': manga.name,
     }
 
     return render(request, 'content.html', context)
@@ -200,7 +203,15 @@ def room(request, title):
             Following.objects.get_or_create(manga = manga, user = request.user)
         elif action == 'unfollow':
             Following.objects.get(manga = manga, user = request.user).delete()  
-            
+        
+        elif action == 'message':
+            Messages.objects.get_or_create(user = request.user, body = request.POST.get('message'), manga = manga)
+        elif action == 'delete-message':
+            try:
+                id = request.POST.get('message-id')
+                Messages.objects.get(manga = manga, user = request.user, id = id).delete()
+            except:
+                pass
     try:
         following = request.user.follows.get(manga = manga)
     except:
@@ -217,7 +228,17 @@ def room(request, title):
 
     manga.all_views = all_views
     manga.save()
+    message = Messages.objects.filter(manga = manga)
 
+    user = False
+    
+    try:
+        if request.user == message.all().first().user:
+            user = True
+        else:
+            user = False
+    except:
+        pass
 
     context = {
         'manga': manga,
@@ -229,7 +250,10 @@ def room(request, title):
         'tags': tags,
         'continue_read': continue_read,
         'following': following,
-        'description': manga.description
+        'description': manga.description,
+        'title': manga.name,
+        'messages': message,
+        'message_user': user
     }
     return render(request, 'room.html', context)
 
